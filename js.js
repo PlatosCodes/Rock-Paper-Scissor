@@ -15,43 +15,59 @@ function playRound(playerSelection){
     let computerChoice = getComputerChoice();
     if (playerSelection == computerChoice) {
         console.log(`It is a tie! ${playerSelection} ties ${computerChoice}`);
-
     }
     else if (playerSelection == "rock" && computerChoice == "paper"){
         console.log(`You lose! ${playerSelection} got covered by ${computerChoice}`);
+        scores[1]++;
     }
     else if (playerSelection == "rock" && computerChoice == "scissors"){
         console.log(`You win! ${playerSelection} crushes ${computerChoice}`);
+        scores[0]++;
     }
     else if (playerSelection == "paper" && computerChoice == "scissors"){
-        return `You lose! ${playerSelection} got cut by ${computerChoice}`;}
+        console.log(`You lose! ${playerSelection} got cut by ${computerChoice}`);
+        scores[1]++;
+    }
     else if (playerSelection == "paper" && computerChoice == "rock"){
-        return `You win! ${playerSelection} covered ${computerChoice}`;}
+        console.log(`You win! ${playerSelection} covered ${computerChoice}`);
+        scores[0]++;
+    }
     else if (playerSelection == "scissors" && computerChoice == "paper"){
-        return `You win! ${playerSelection} cut ${computerChoice}`;}
+        console.log(`You win! ${playerSelection} cut ${computerChoice}`);
+        scores[0]++;
+    }
     else if (playerSelection == "scissors" && computerChoice == "rock"){
-        return `You lose! ${playerSelection} got crushed by ${computerChoice}`;}
+        console.log(`You lose! ${playerSelection} got crushed by ${computerChoice}`);
+        scores[1]++;
+    }
 }
 
-let pScore = 0, cScore = 0;
+let scores = [0,0]
 const choices = document.querySelectorAll('input');
 choices.forEach((y) => {
     y.addEventListener('click', () => {
         w = playRound(y.id);
-        console.log(w);
-        pScore = checkScore(pScore, cScore)
-        console.log(pScore)
+        scores = checkScore([scores[0], scores[1]])
+        
     });
 });
 
-function checkScore(pScore, cScore){
-    if (pScore + cScore < 5) {
-        pScore++
-        console.log('Hello')
-    }
+function checkScore(scores){
+    if (scores[0]>2){
+    alert(`Game over -- player wins!`);}
+    else if (scores[1] > 2) {
+        alert(`Game over -- computer wins!`);}
     else {
-        console.log('done')
+        console.log(`Player: ${scores[0]}, Computer: ${scores[1]}`);
+        pScore = document.querySelectorAll(".results .scores");
+        let i = 0;
+        pScore.forEach((c) => {
+            c.innerHTML = `${scores[i]}`;
+            i++;
+        })
+        console.log(pScore);
     }
-    return pScore
+    
+    return scores;
 }
 
